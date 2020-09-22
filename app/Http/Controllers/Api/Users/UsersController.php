@@ -3,33 +3,33 @@
 namespace App\Http\Controllers\Api\Users;
 use App\Http\Controllers\Controller;
 
+use App\Services\AuthService;
+use App\Services\UsersService;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
-    public function revoke(Request $request) {
-        DB::table('oauth_access_tokens')
-            ->where('user_id', $request->user()->id)
-            ->update([
-                'revoked' => true
-            ]);
-        return response()->json('DONE');
+
+    private $usersService;
+    private $authService;
+
+    public function __construct()
+    {
+        $this->usersService = new UsersService();
+        $this->authService = new AuthService();
     }
 
     public function authUser() {
-        if(!Auth::check()) {
-            $user = App\User::find(1);
-            Auth::login($user);
-        }
-        return Auth::user();
+        return $this->authService->getCurrentAuthUser();
     }
 
     public function userById($id) {
-        return \App\User::find($id)? \App\User::find($id) : 404;
+        return $this->usersService->getUserById($id);
     }
 
     public function allUsers() {
-        return \App\User::all();
+        return $this->usersService->getAllUsers();
     }
 }
