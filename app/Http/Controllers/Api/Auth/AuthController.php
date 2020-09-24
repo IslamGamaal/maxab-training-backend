@@ -4,18 +4,21 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\SignUpRequest;
+use App\Services\UsersService;
 use App\User;
 
 
 class AuthController extends Controller
 {
+    private $usersService;
     /**
      * Create a new AuthController instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UsersService $usersService)
     {
+        $this->usersService = $usersService;
         $this->middleware('auth:api', ['except' => ['login', 'signup']]);
     }
 
@@ -26,7 +29,7 @@ class AuthController extends Controller
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Email or password does\'t exist'], 401);
         }
-
+        $this->usersService->setCurrentUserAcessToken($token);
         return $this->respondWithToken($token);
     }
 
