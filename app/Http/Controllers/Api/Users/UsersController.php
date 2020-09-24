@@ -25,11 +25,19 @@ class UsersController extends Controller
         return $this->authService->getCurrentAuthUser();
     }
 
+    public function usersCount() {
+        return $this->usersService->getUsersCount();
+    }
+
     public function userById($id) {
         return $this->usersService->getUserById($id);
     }
 
     public function allUsers() {
         return $this->usersService->getAllUsers();
+    }
+
+    public function allUsersByPage($limit) {
+        return $this->usersService->getUsersByPage($limit);
     }
 }

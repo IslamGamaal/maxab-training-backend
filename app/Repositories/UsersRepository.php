@@ -17,6 +17,15 @@ class UsersRepository extends Repository
         parent::__construct($model);
     }
 
+    public function getUsersCount() {
+        return User::all()->count();
+    }
+
+    public function getUsersCurrentPage($limit) {
+        return User::paginate($limit);
+    }
+
+
     public function getUserAccessToken($id) {
         return User::query()
                 ->select('remember_token')

@@ -26,6 +26,11 @@ class UsersService
         return $this->usersRepository->all();
     }
 
+    public function getUsersByPage($limit) {
+        return $this->usersRepository->getUsersCurrentPage($limit);
+
+    }
+
     public function getUserById($id) {
         $user = $this->usersRepository->find($id);
         return $user? $user : response()->json(['error' => 'User does\'t exist'], 404);
@@ -41,6 +46,11 @@ class UsersService
     public function setCurrentUserAcessToken($token) {
         $currentUserId = $this->authService->getCurrentAuthUserId();
         return $this->usersRepository->setUserAccessToken($currentUserId, $token);
+
+    }
+
+    public function getUsersCount() {
+        return $this->usersRepository->getUsersCount();
 
     }
 
