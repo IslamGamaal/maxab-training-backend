@@ -16,4 +16,17 @@ class UsersRepository extends Repository
     {
         parent::__construct($model);
     }
+
+    public function getUserAccessToken($id) {
+        return User::query()
+                ->select('remember_token')
+                ->where('id', $id)
+                ->first()->remember_token;
+    }
+
+    public function setUserAccessToken($id, $token) {
+        return User::query()
+            ->where('id', $id)
+            ->update(['remember_token' => $token]);
+    }
 }

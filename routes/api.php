@@ -9,7 +9,7 @@ Route::group([
     Route::post('logout', 'Api\Auth\AuthController@logout');
     Route::post('refresh', 'Api\Auth\AuthController@refresh');
 
-    Route::get('auth', 'Api\Users\UsersController@authUser');
-    Route::get('user/{id}', 'Api\Users\UsersController@userById');
-    Route::get('users', 'Api\Users\UsersController@allUsers');
+    Route::get('auth', 'Api\Users\UsersController@authUser') -> middleware('authenticate_user');
+    Route::get('user/{id}', 'Api\Users\UsersController@userById') -> middleware('authenticate_user');
+    Route::get('users', 'Api\Users\UsersController@allUsers') -> middleware('authenticate_user');
 });

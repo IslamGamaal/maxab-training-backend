@@ -14,4 +14,11 @@ class AuthService
         }
         return Auth::user();
     }
+
+    public function getCurrentAuthUserId() {
+        if(!Auth::check()) {
+            return -1;
+        }
+        return Auth::user()->id;
+    }
 }
