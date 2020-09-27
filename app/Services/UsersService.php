@@ -28,7 +28,10 @@ class UsersService
 
     public function getUsersByPage($limit) {
         return $this->usersRepository->getUsersCurrentPage($limit);
+    }
 
+    public function searchUsers($limit, $query) {
+        return $this->usersRepository->searchUsers($limit, $query);
     }
 
     public function getUserById($id) {

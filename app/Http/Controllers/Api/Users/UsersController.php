@@ -40,4 +40,8 @@ class UsersController extends Controller
     public function allUsersByPage($limit) {
         return $this->usersService->getUsersByPage($limit);
     }
+
+    public function searchUsers($limit, $query) {
+        return $this->usersService->searchUsers($limit, $query);
+    }
 }

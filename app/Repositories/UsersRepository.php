@@ -25,6 +25,13 @@ class UsersRepository extends Repository
         return User::paginate($limit);
     }
 
+    public function searchUsers($limit, $query) {
+        return User::where('name', 'ilike', "%{$query}%")
+                ->orWhere('lastName', 'ilike', "%{$query}%")
+                ->orWhere('email', '=',"$query")
+                ->orWhere('phoneNumber', '=', "$query")
+                ->paginate($limit);
+    }
 
     public function getUserAccessToken($id) {
         return User::query()
